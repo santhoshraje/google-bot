@@ -1,10 +1,9 @@
   #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from config_loader import get_config_value as load
 """
 Simple telegram bot framework
 """
-import logging
 
 from telegram.ext import Updater, CommandHandler
 
@@ -13,7 +12,7 @@ def start(update, context):
     update.message.reply_text('Welcome to my Bot!')
 
 def main():
-    updater = Updater("TOKEN", use_context=True)
+    updater = Updater(load('BOT_TOKEN'), use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
