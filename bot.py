@@ -1,6 +1,7 @@
   #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from config_loader import get_config_value as load
+from rss import getFeedData as rssdata
 """
 Simple telegram bot framework
 """
@@ -11,6 +12,10 @@ from telegram.ext import Updater, CommandHandler
 def start(update, context):
     update.message.reply_text('Welcome to my Bot!')
 
+def rss(update, context):
+    update.message.reply_text('Fetching feed please wait')
+    update.message.reply_text(rssdata())
+
 def main():
     updater = Updater(load('BOT_TOKEN'), use_context=True)
 
@@ -19,6 +24,7 @@ def main():
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("rss", rss))
 
     # Start the Bot
     updater.start_polling()
