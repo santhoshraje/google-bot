@@ -1,7 +1,7 @@
 import feedparser
 from datetime import date
 import pickle
-
+from scheduler import Scheduler
 
 class FeedObject:
     def __init__(self, id, title, traffic, expanded_title, snippet, url, image_url):
@@ -24,8 +24,20 @@ class FeedObject:
             '\n\n' + self.snippet + '\n\n' + 'Find out more: ' + self.url
         return data
 
+    def formatted_beta(self):
+        data = ""
+        data += self.title + ' (' + self.traffic + ' searches today)' + \
+            '\n\n' + self.snippet
+        return data
+
+    def formatted_beta_us(self):
+        data = ""
+        data += self.title + ' (' + self.traffic + ' searches)' + \
+            '\n\n' + self.snippet
+        return data
+
     def __str__(self):
-        return 'FeedObject: \n\n' + self.formatted() + '\n'
+        return 'FeedObject: \n\n' + self.formatted_beta() + '\n'
 
 
 class GoogleTrendingSearch:
@@ -34,6 +46,7 @@ class GoogleTrendingSearch:
         self.display_date = str(date.today().strftime("%d %B %Y"))
         self.feed = feedparser.parse(url)
         self.feed_array = []
+        print('initalised')
 
     def published_today(self, published_date):
         today = date.today().strftime("%d %B")
@@ -48,6 +61,9 @@ class GoogleTrendingSearch:
                 id += 1
                 self.feed_array.append(FeedObject(id, post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
                                                   post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
+        
+        # for item in self.feed_array:
+        #     print(item)
 
     def get_feed_data_all(self):
         id = 0
@@ -55,3 +71,13 @@ class GoogleTrendingSearch:
             id += 1
             self.feed_array.append(FeedObject(id, post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
                                                 post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
+
+
+
+# def main():
+#     g = GoogleTrendingSearch('https://trends.google.com/trends/trendingsearches/daily/rss?geo=US')
+#     g.get_feed_data_all()
+#     for item in g.feed_array:
+#         print(item)
+
+# main()
