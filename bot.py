@@ -8,6 +8,7 @@ class Bot:
     def __init__(self):
         self.token = load('BOT_TOKEN')        
         self.channel_id = load('CHANNEL_ID')
+        self.google_trending_search_image = load('GOOGLE_TRENDING_IMAGE')
         # telegram api
         self.updater = Updater(self.token, use_context=True)
         # Get the dispatcher to register handlers
@@ -15,9 +16,6 @@ class Bot:
         self.dp.add_handler(CommandHandler("start", self.start))
         self.dp.add_handler(CommandHandler("feed", self.google_trending_sg))
         self.dp.add_handler(CommandHandler("channel", self.google_trending_us))
-        # variables
-        self.image_url = 'https://miro.medium.com/max/821/1*Fi6masemXJT3Q8YWekQCDQ.png'
-
 
     def start_bot(self):
         print('bot active')
@@ -27,11 +25,9 @@ class Bot:
         context.bot.send_message(chat_id= update.effective_chat.id, text="I'm a bot, please talk to me!") 
     
     def google_trending_sg(self, update, context):
-        feed_url = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=SG'
         posted_array = [0]
-
         # get feed
-        gfeed = GoogleTrendingSearch(feed_url)
+        gfeed = GoogleTrendingSearch('SG')
         gfeed.get_feed_data_today()
 
         # file io
@@ -53,17 +49,16 @@ class Bot:
                 f = open("file.p", "wb")
                 pickle.dump(posted_array, f)
                 f.close()
-                context.bot.send_photo(chat_id = update.effective_chat.id, photo = self.image_url, caption = item.formatted_beta())
+                context.bot.send_photo(chat_id = update.effective_chat.id, photo = self.google_trending_search_image, caption = item.formatted_beta())
                 break
 
     
     def google_trending_us(self, update, context):
-        feed_url = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=US'
         channel_posted_array = [0]
         # get feed
-        gfeed = GoogleTrendingSearch(feed_url)
+        gfeed = GoogleTrendingSearch('US')
+        # get today uses local time. Need to change to US time
         gfeed.get_feed_data_all()
-
         # file io
         try:
             f = open("channel.p", "rb")
@@ -82,7 +77,7 @@ class Bot:
                 f = open("channel.p", "wb")
                 pickle.dump(channel_posted_array, f)
                 f.close()                
-                context.bot.send_photo(chat_id = self.channel_id, photo = self.image_url, caption = item.formatted_beta_us(), disable_notification = True)
+                context.bot.send_photo(chat_id = self.channel_id, photo = self.google_trending_search_image, caption = item.formatted_beta_us(), disable_notification = True)
                 break
 
     
