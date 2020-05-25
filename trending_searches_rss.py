@@ -41,10 +41,10 @@ class FeedObject:
 
 
 class GoogleTrendingSearch:
-    def __init__(self, url):
-        self.url = url
+    def __init__(self, country):
+        self.url = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=' + country
         self.display_date = str(date.today().strftime("%d %B %Y"))
-        self.feed = feedparser.parse(url)
+        self.feed = feedparser.parse(self.url)
         self.feed_array = []
 
     def published_today(self, published_date):
