@@ -60,9 +60,6 @@ class GoogleTrendingSearch:
                 id += 1
                 self.feed_array.append(FeedObject(id, post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
                                                   post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
-        
-        # for item in self.feed_array:
-        #     print(item)
 
     def get_feed_data_all(self):
         id = 0
