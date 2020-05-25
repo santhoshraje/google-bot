@@ -5,10 +5,10 @@ import pickle
 import os
 
 class Bot:
-    def __init__(self):
-        self.token = load('BOT_TOKEN')        
-        self.channel_id = load('CHANNEL_ID')
-        self.google_trending_search_image = load('GOOGLE_TRENDING_IMAGE')
+    def __init__(self, config):
+        self.token = load(config, 'BOT_TOKEN')        
+        self.channel_id = load(config, 'CHANNEL_ID')
+        self.google_trending_search_image = load(config, 'GOOGLE_TRENDING_IMAGE')
         # telegram api
         self.updater = Updater(self.token, use_context=True)
         # Get the dispatcher to register handlers
