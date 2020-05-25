@@ -46,7 +46,6 @@ class GoogleTrendingSearch:
         self.display_date = str(date.today().strftime("%d %B %Y"))
         self.feed = feedparser.parse(url)
         self.feed_array = []
-        print('initalised')
 
     def published_today(self, published_date):
         today = date.today().strftime("%d %B")
