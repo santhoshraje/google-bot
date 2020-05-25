@@ -1,6 +1,7 @@
 {
     "DEFAULT":
     {
-      "BOT_TOKEN": ""
+      "BOT_TOKEN": "",
+      "CHANNEL_ID": ""
     }
 }
