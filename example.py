@@ -4,7 +4,7 @@ from bot import Bot
 
 
 def main():
-    bot = Bot()
+    bot = Bot('config.json')
     bot.start_bot()
 
 if __name__ == '__main__':
