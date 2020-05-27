@@ -1,7 +1,6 @@
 import feedparser
 from datetime import date
 import pickle
-from scheduler import Scheduler
 
 class FeedObject:
     def __init__(self, id, title, traffic, expanded_title, snippet, url, image_url):
