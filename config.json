@@ -2,6 +2,7 @@
     "DEFAULT":
     {
       "BOT_TOKEN": "",
-      "CHANNEL_ID": ""
+      "CHANNEL_ID": "",
+      "GOOGLE_TRENDING_IMAGE": "https://miro.medium.com/max/821/1*Fi6masemXJT3Q8YWekQCDQ.png"
     }
 }
