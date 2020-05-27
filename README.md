@@ -5,7 +5,7 @@ Robust bot
 </a>
 
 Telegram bot with cool features like:
- - RSS Engine
+ - RSS engine
     - Periodically receiving trending searches from google Singapore
     - Periodically receiving trending searches from google USA
  
