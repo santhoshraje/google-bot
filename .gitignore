@@ -124,3 +124,7 @@ dmypy.json
 .pyre/
 
 .vscode/settings.json
+
+file.p
+
+test.py
