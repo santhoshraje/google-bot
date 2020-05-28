@@ -38,6 +38,9 @@ class FeedObject:
     def __str__(self):
         return 'FeedObject: \n\n' + self.formatted_beta() + '\n'
 
+    def __hash__(self):
+        return hash(self.title)
+
 
 class GoogleTrendingSearch:
     def __init__(self, country):
