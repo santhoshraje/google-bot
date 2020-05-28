@@ -14,8 +14,6 @@ Telegram bot with cool features like:
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-
-Intall the prerequisites
 ```
 pip install -r requirements.txt
 ```
