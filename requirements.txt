@@ -1,9 +1,11 @@
+autopep8==1.5.2
 certifi==2020.4.5.1
 cffi==1.14.0
 cryptography==2.9.2
 decorator==4.4.2
 feedparser==5.2.1
 future==0.18.2
+pycodestyle==2.6.0
 pycparser==2.20
 python-telegram-bot==12.7
 six==1.15.0
