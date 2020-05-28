@@ -8,37 +8,45 @@ import os
 class Bot:
     def __init__(self, config):
         # loaded from config
-        self.token = load(config, 'BOT_TOKEN')        
+        self.token = load(config, 'BOT_TOKEN')
         self.channel_id = load(config, 'CHANNEL_ID')
-        self.google_trending_search_image = load(config, 'GOOGLE_TRENDING_IMAGE')
+        self.google_trending_search_image = load(
+            config, 'GOOGLE_TRENDING_IMAGE')
         # telegram api
         self.updater = Updater(self.token, use_context=True)
         # Get the dispatcher to register handlers
-        self.dp = self.updater.dispatcher   
+        self.dp = self.updater.dispatcher
         # bot commands
         self.dp.add_handler(CommandHandler("start", self.start))
-        self.dp.add_handler(CommandHandler("googlesg", self.subscribe_to_google_sg))
-        self.dp.add_handler(CommandHandler("googleus", self.subscribe_to_google_us))
+        self.dp.add_handler(CommandHandler(
+            "googlesg", self.subscribe_to_google_sg))
+        self.dp.add_handler(CommandHandler(
+            "googleus", self.subscribe_to_google_us))
+        self.dp.add_handler(CommandHandler(
+            "testfeed", self.google_trending_testing))
         # variables used by bot
         self.id = 0
 
     def start_bot(self):
         print('bot active')
         self.updater.start_polling()
-    
-    def start(self, update, context):
-        context.bot.send_message(chat_id = self.id, text = "I'm a bot, please talk to me!") 
 
-    # subscribe to receive trending google singapore searches every 30 mins 
+    def start(self, update, context):
+        context.bot.send_message(
+            chat_id=self.id, text="I'm a bot, please talk to me!")
+
+    # subscribe to receive trending google singapore searches every 30 mins
     def subscribe_to_google_sg(self, update, context):
         self.id = update.effective_chat.id
-        self.updater.job_queue.run_repeating(self.google_trending_sg, interval = 1800, first = 0)
-    
+        self.updater.job_queue.run_repeating(
+            self.google_trending_sg, interval=1800, first=0)
+
     # subscribe to receive trending google USA searches every 45 mins
     def subscribe_to_google_us(self, update, context):
         self.id = update.effective_chat.id
-        self.updater.job_queue.run_repeating(self.google_trending_us, interval = 2700, first = 0)
-    
+        self.updater.job_queue.run_repeating(
+            self.google_trending_us, interval=2700, first=0)
+
     def google_trending_us(self, context: telegram.ext.CallbackContext):
         channel_posted_array = [0]
         # get feed
@@ -59,12 +67,13 @@ class Bot:
         f.close()
 
         for item in gfeed.feed_array:
-            if item.id not in channel_posted_array:
-                channel_posted_array.append(item.id)
+            if hash(item) not in channel_posted_array:
+                channel_posted_array.append(hash(item))
                 f = open("us.p", "wb")
                 pickle.dump(channel_posted_array, f)
-                f.close()                
-                context.bot.send_photo(chat_id = self.id, photo = self.google_trending_search_image, caption = item.formatted_beta_us(), disable_notification = True)
+                f.close()
+                context.bot.send_photo(chat_id=self.id, photo=self.google_trending_search_image,
+                                       caption=item.formatted_beta_us(), disable_notification=True)
                 break
 
     def google_trending_sg(self, context: telegram.ext.CallbackContext):
@@ -84,15 +93,16 @@ class Bot:
         f.close()
 
         for item in gfeed.feed_array:
-            if item.id not in posted_array:
+            if hash(item) not in posted_array:
                 # write to file instead of local variable
-                posted_array.append(item.id)
+                posted_array.append(hash(item))
                 f = open("sg.p", "wb")
                 pickle.dump(posted_array, f)
                 f.close()
-                context.bot.send_photo(chat_id = self.id, photo = self.google_trending_search_image, caption = item.formatted_beta())
+                context.bot.send_photo(
+                    chat_id=self.id, photo=self.google_trending_search_image, caption=item.formatted_beta())
                 break
-    
+
     # testing for individual functions
     def google_trending_testing(self, update, context):
         posted_array = [0]
@@ -112,11 +122,13 @@ class Bot:
         f.close()
 
         for item in gfeed.feed_array:
-            if item.id not in posted_array:
+            if hash(item) not in posted_array:
                 # write to file instead of local variable
-                posted_array.append(item.id)
+                posted_array.append(hash(item))
+                print(hash(item))
                 f = open("test.p", "wb")
                 pickle.dump(posted_array, f)
                 f.close()
-                context.bot.send_photo(chat_id = update.effective_chat.id, photo = self.google_trending_search_image, caption = item.formatted_beta())
+                context.bot.send_photo(chat_id=update.effective_chat.id,
+                                       photo=self.google_trending_search_image, caption=item.formatted_beta())
                 break
