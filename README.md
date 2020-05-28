@@ -9,4 +9,14 @@ Telegram bot with cool features like:
     - Periodically receiving trending searches from Google Singapore
     - Periodically receiving trending searches from Google USA
  
+ ## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+Intall the prerequisites
+```
+pip install -r requirements.txt
+```
 
