@@ -42,3 +42,12 @@ run the script:
 python example.py
 ```
 script will run until you stop it with CTRL + C / CMD + C
+
+## Deployment
+
+You may host the bot on any server that has python 3 installed
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
