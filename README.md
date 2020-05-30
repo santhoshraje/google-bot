@@ -5,9 +5,11 @@
 </a>
 
 Telegram bot with cool features like:
+ - Multithreading support
+ - Scheduling support
  - RSS engine
-    - Periodically receiving trending searches from Google Singapore
-    - Periodically receiving trending searches from Google USA
+    - Periodically receive trending searches from Google Singapore
+    - Periodically receive trending searches from Google USA
  
  ## Getting Started
 
