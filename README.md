@@ -22,6 +22,8 @@ pip install -r requirements.txt
 
 ### Usage
 
+#### Script
+
 from example.py:
 ```
 from bot import Bot
@@ -42,6 +44,17 @@ run the script:
 python example.py
 ```
 script will run until you stop it with CTRL + C / CMD + C
+
+#### Bot 
+
+Subscribe to Google SG tending searches:
+```
+/googlesg
+```
+Subscribe to Google US trending searches:
+```
+/googleus
+```
 
 ## Deployment
 
