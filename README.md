@@ -20,3 +20,25 @@ These instructions will get you a copy of the project up and running on your loc
 pip install -r requirements.txt
 ```
 
+### Usage
+
+from example.py:
+```
+from bot import Bot
+
+def main():
+    # path to config file. remember to input your telegram bot token
+    bot = Bot('config.json')
+    # start the bot
+    bot.start_bot()
+
+if __name__ == '__main__':
+    main()
+```
+
+run the script:
+
+```
+python example.py
+```
+script will run until you stop it with CTRL + C / CMD + C
