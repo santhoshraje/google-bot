@@ -4,6 +4,9 @@ from config_loader import get_config_value as load
 from trending_searches_rss import GoogleTrendingSearch
 import pickle
 import os
+from threading import Thread
+import schedule
+import time
 
 class Bot:
     def __init__(self, config):
@@ -29,6 +32,7 @@ class Bot:
 
     def start_bot(self):
         print('bot active')
+        Thread(target=self.cleaner).start()
         self.updater.start_polling()
 
     def start(self, update, context):
@@ -39,7 +43,7 @@ class Bot:
     def subscribe_to_google_sg(self, update, context):
         self.id = update.effective_chat.id
         self.updater.job_queue.run_repeating(
-            self.google_trending_sg, interval=1800, first=0)
+            self.google_trending_sg, interval=3600, first=0)
 
     # subscribe to receive trending google USA searches every 45 mins
     def subscribe_to_google_us(self, update, context):
@@ -132,3 +136,12 @@ class Bot:
                 context.bot.send_photo(chat_id=update.effective_chat.id,
                                        photo=self.google_trending_search_image, caption=item.formatted_beta())
                 break
+
+    def cleaner(self):
+        schedule.every().day.at("00:00").do(self.clean)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    def clean(self):
+        os.remove('sg.p')
