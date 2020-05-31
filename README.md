@@ -13,7 +13,7 @@ Telegram bot with cool features like:
  
  ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will get you a copy of the project up and running on your local machine for development, testing and deployment purposes.
 
 ### Prerequisites
 ```
@@ -21,6 +21,8 @@ pip install -r requirements.txt
 ```
 
 ### Usage
+
+#### Script
 
 from example.py:
 ```
@@ -42,6 +44,17 @@ run the script:
 python example.py
 ```
 script will run until you stop it with CTRL + C / CMD + C
+
+#### Bot 
+
+Subscribe to Google SG tending searches:
+```
+/googlesg
+```
+Subscribe to Google US trending searches:
+```
+/googleus
+```
 
 ## Deployment
 
