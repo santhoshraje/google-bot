@@ -19,24 +19,24 @@ class FeedObject:
 
     def formatted(self):
         data = ""
-        data += self.title + ' (' + self.traffic + ' searches today)' + \
-            '\n\n' + self.snippet + '\n\n' + 'Find out more: ' + self.url
+        data += '<b>' + self.title + '</b> (' + self.traffic + ' searches today)' + \
+            '\n\n' + self.snippet + '\n\n' + '<a href="' + self.url + '">' + 'Find out more </a>' 
         return data
 
-    def formatted_beta(self):
+    def formatted_lite(self):
         data = ""
         data += self.title + ' (' + self.traffic + ' searches today)' + \
             '\n\n' + self.snippet
         return data
 
-    def formatted_beta_us(self):
+    def formatted_lite_us(self):
         data = ""
         data += self.title + ' (' + self.traffic + ' searches)' + \
             '\n\n' + self.snippet
         return data
 
     def __str__(self):
-        return 'FeedObject: \n\n' + self.formatted_beta() + '\n'
+        return 'FeedObject Full: \n\n' + self.formatted() + '\n'
 
     def __hash__(self):
         return hash(self.title)
