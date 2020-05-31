@@ -8,6 +8,7 @@ from threading import Thread
 import schedule
 import time
 
+
 class Bot:
     def __init__(self, config):
         # loaded from config
@@ -36,8 +37,10 @@ class Bot:
         self.updater.start_polling()
 
     def start(self, update, context):
-        context.bot.send_message(
-            chat_id=self.id, text="I'm a bot, please talk to me!")
+        self.id = update.effective_chat.id
+        context.bot.send_message(chat_id=self.id,
+                                 text='<b>bold</b> <i>italic</i> <a href="http://google.com">link</a>.',
+                                 parse_mode=telegram.ParseMode.HTML)
 
     # subscribe to receive trending google singapore searches every 30 mins
     def subscribe_to_google_sg(self, update, context):
@@ -77,7 +80,7 @@ class Bot:
                 pickle.dump(channel_posted_array, f)
                 f.close()
                 context.bot.send_photo(chat_id=self.id, photo=self.google_trending_search_image,
-                                       caption=item.formatted_beta_us(), disable_notification=True)
+                                       caption=item.formatted_lite_us(), disable_notification=True)
                 break
 
     def google_trending_sg(self, context: telegram.ext.CallbackContext):
@@ -104,7 +107,7 @@ class Bot:
                 pickle.dump(posted_array, f)
                 f.close()
                 context.bot.send_photo(
-                    chat_id=self.id, photo=self.google_trending_search_image, caption=item.formatted_beta())
+                    chat_id=self.id, photo=self.google_trending_search_image, caption=item.formatted_lite())
                 break
 
     # testing for individual functions
@@ -129,12 +132,13 @@ class Bot:
             if hash(item) not in posted_array:
                 # write to file instead of local variable
                 posted_array.append(hash(item))
+                print(item)
                 print(hash(item))
                 f = open("test.p", "wb")
                 pickle.dump(posted_array, f)
                 f.close()
                 context.bot.send_photo(chat_id=update.effective_chat.id,
-                                       photo=self.google_trending_search_image, caption=item.formatted_beta())
+                                       photo=self.google_trending_search_image, caption=item.formatted(), parse_mode=telegram.ParseMode.HTML)
                 break
 
     def cleaner(self):
