@@ -23,9 +23,10 @@ class Bot:
         # bot commands
         self.dp.add_handler(CommandHandler("start", self.start))
         self.dp.add_handler(CommandHandler(
-            "googlesg", self.subscribe_to_google_sg))
-        self.dp.add_handler(CommandHandler(
-            "googleus", self.subscribe_to_google_us))
+            "trending", self.subscribe_to_google))
+        # Deprecated
+        # self.dp.add_handler(CommandHandler(
+        #     "googleus", self.subscribe_to_google_us))
         self.dp.add_handler(CommandHandler(
             "testfeed", self.google_trending_testing))
         # variables used by bot
@@ -42,59 +43,61 @@ class Bot:
                                  text='<b>bold</b> <i>italic</i> <a href="http://google.com">link</a>.',
                                  parse_mode=telegram.ParseMode.HTML)
 
-    # subscribe to receive trending google singapore searches every 30 mins
-    def subscribe_to_google_sg(self, update, context):
+    # subscribe to receive trending google singapore searches every 60 mins
+    def subscribe_to_google(self, update, context):
         self.id = update.effective_chat.id
         self.updater.job_queue.run_repeating(
-            self.google_trending_sg, interval=3600, first=0)
+            self.google_trending, interval=3600, first=0)
 
-    # subscribe to receive trending google USA searches every 45 mins
-    def subscribe_to_google_us(self, update, context):
-        self.id = update.effective_chat.id
-        self.updater.job_queue.run_repeating(
-            self.google_trending_us, interval=2700, first=0)
+    # Deprecated. subscribe to receive trending google USA searches every 45 mins
+    # def subscribe_to_google_us(self, update, context):
+    #     self.id = update.effective_chat.id
+    #     self.updater.job_queue.run_repeating(
+    #         self.google_trending_us, interval=2700, first=0)
 
-    def google_trending_us(self, context: telegram.ext.CallbackContext):
-        channel_posted_array = [0]
-        # get feed
-        gfeed = GoogleTrendingSearch('US')
-        # get today uses local time. Need to change to US time
-        gfeed.get_feed_data_all()
+    # Deprecated. Implementation is not scalable
+    # def google_trending_us(self, context: telegram.ext.CallbackContext):
+    #     channel_posted_array = [0]
+    #     # get feed
+    #     gfeed = GoogleTrendingSearch('US')
+    #     # get today uses local time. Need to change to US time
+    #     gfeed.get_feed_data_all()
 
-        # file io
-        try:
-            f = open("us.p", "rb")
-            channel_posted_array = pickle.load(f)
-            f.close()
-        except:
-            f = open("us.p", 'wb')
-            pickle.dump(channel_posted_array, f)
-            f.close()
+    #     # file io
+    #     try:
+    #         f = open("us.p", "rb")
+    #         channel_posted_array = pickle.load(f)
+    #         f.close()
+    #     except:
+    #         f = open("us.p", 'wb')
+    #         pickle.dump(channel_posted_array, f)
+    #         f.close()
 
-        f.close()
+    #     f.close()
 
-        for item in gfeed.feed_array:
-            if hash(item) not in channel_posted_array:
-                channel_posted_array.append(hash(item))
-                f = open("us.p", "wb")
-                pickle.dump(channel_posted_array, f)
-                f.close()
-                context.bot.send_photo(chat_id=self.id, photo=self.google_trending_search_image,
-                                       caption=item.formatted_lite_us(), disable_notification=True)
-                break
+    #     for item in gfeed.feed_array:
+    #         if hash(item) not in channel_posted_array:
+    #             channel_posted_array.append(hash(item))
+    #             f = open("us.p", "wb")
+    #             pickle.dump(channel_posted_array, f)
+    #             f.close()
+    #             context.bot.send_photo(chat_id=self.id, photo=self.google_trending_search_image,
+    #                                    caption=item.formatted_lite_us(), disable_notification=True)
+    #             break
 
-    def google_trending_sg(self, context: telegram.ext.CallbackContext):
+    # renamed from google_trending_sg
+    def google_trending(self, context: telegram.ext.CallbackContext):
         posted_array = [0]
         # get feed
         gfeed = GoogleTrendingSearch('SG')
         gfeed.get_feed_data_today()
         # file io
         try:
-            f = open("sg.p", "rb")
+            f = open("trending.p", "rb")
             posted_array = pickle.load(f)
             f.close()
         except:
-            f = open("sg.p", 'wb')
+            f = open("trending.p", 'wb')
             pickle.dump(posted_array, f)
             f.close()
         f.close()
@@ -103,7 +106,7 @@ class Bot:
             if hash(item) not in posted_array:
                 # write to file instead of local variable
                 posted_array.append(hash(item))
-                f = open("sg.p", "wb")
+                f = open("trending.p", "wb")
                 pickle.dump(posted_array, f)
                 f.close()
                 context.bot.send_photo(
