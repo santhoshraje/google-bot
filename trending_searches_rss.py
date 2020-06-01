@@ -53,7 +53,7 @@ class GoogleTrendingSearch:
         self.feed_array = []
 
     def published_today(self, published_date):
-        today = date.today().strftime("%d %B")
+        today = date.today().strftime("%d %b")
         if today in published_date:
             return True
         return False
