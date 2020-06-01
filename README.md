@@ -8,9 +8,9 @@ Telegram bot with cool features like:
  - Multithreading support
  - Scheduling support
  - RSS engine
-    - Periodically receive trending searches from Google
-      - Supported countries:
-        - Singapore
+    - Periodically receive trending searches from Google. Supported countries include:
+      - Singapore
+      - More coming soon
  
  ## Getting Started
 
