@@ -8,8 +8,9 @@ Telegram bot with cool features like:
  - Multithreading support
  - Scheduling support
  - RSS engine
-    - Periodically receive trending searches from Google Singapore
-    - Periodically receive trending searches from Google USA
+    - Periodically receive trending searches from Google
+      - Supported countries:
+        - Singapore
  
  ## Getting Started
 
@@ -47,13 +48,9 @@ script will run until you stop it with CTRL + C / CMD + C
 
 #### Bot 
 
-Subscribe to Google SG tending searches:
+Subscribe to Google tending searches:
 ```
-/googlesg
-```
-Subscribe to Google US trending searches:
-```
-/googleus
+/trending
 ```
 
 ## Deployment
