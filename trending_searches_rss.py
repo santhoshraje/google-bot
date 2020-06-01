@@ -4,8 +4,7 @@ import pickle
 
 
 class FeedObject:
-    def __init__(self, id, title, traffic, expanded_title, snippet, url, image_url):
-        self.id = id
+    def __init__(self, title, traffic, expanded_title, snippet, url, image_url):
         self.title = self.sanitize_data(title)
         self.traffic = self.sanitize_data(traffic)
         self.expanded_title = self.sanitize_data(expanded_title)
@@ -59,17 +58,13 @@ class GoogleTrendingSearch:
         return False
 
     def get_feed_data_today(self):
-        id = 0
         for post in self.feed.entries:
             if self.published_today(post['published']):
-                id += 1
-                self.feed_array.append(FeedObject(id, post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
+                self.feed_array.append(FeedObject(post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
                                                   post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
 
     def get_feed_data_all(self):
-        id = 0
         for post in self.feed.entries:
-            id += 1
-            self.feed_array.append(FeedObject(id, post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
+            self.feed_array.append(FeedObject(post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
                                               post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
 
