@@ -151,4 +151,4 @@ class Bot:
             time.sleep(1)
 
     def clean(self):
-        os.remove('sg.p')
+        os.remove('trending.p')
