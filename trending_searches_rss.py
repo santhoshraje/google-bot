@@ -2,6 +2,7 @@ import feedparser
 from datetime import date
 import pickle
 
+
 class FeedObject:
     def __init__(self, id, title, traffic, expanded_title, snippet, url, image_url):
         self.id = id
@@ -20,7 +21,8 @@ class FeedObject:
     def formatted(self):
         data = ""
         data += '<b>' + self.title + '</b> (' + self.traffic + ' searches today)' + \
-            '\n\n' + self.snippet + '\n\n' + '<a href="' + self.url + '">' + 'Find out more </a>' 
+            '\n\n' + self.snippet + '\n\n' + '<a href="' + \
+                self.url + '">' + 'Find out more </a>'
         return data
 
     def formatted_lite(self):
@@ -29,11 +31,12 @@ class FeedObject:
             '\n\n' + self.snippet
         return data
 
-    def formatted_lite_us(self):
-        data = ""
-        data += self.title + ' (' + self.traffic + ' searches)' + \
-            '\n\n' + self.snippet
-        return data
+    # Deprecated
+    # def formatted_lite_us(self):
+    #     data = ""
+    #     data += self.title + ' (' + self.traffic + ' searches)' + \
+    #         '\n\n' + self.snippet
+    #     return data
 
     def __str__(self):
         return 'FeedObject Full: \n\n' + self.formatted() + '\n'
@@ -68,14 +71,5 @@ class GoogleTrendingSearch:
         for post in self.feed.entries:
             id += 1
             self.feed_array.append(FeedObject(id, post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
-                                                post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
+                                              post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
 
-
-
-# def main():
-#     g = GoogleTrendingSearch('https://trends.google.com/trends/trendingsearches/daily/rss?geo=US')
-#     g.get_feed_data_all()
-#     for item in g.feed_array:
-#         print(item)
-
-# main()
