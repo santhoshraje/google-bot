@@ -2,7 +2,6 @@ import feedparser
 from datetime import date
 import pickle
 
-
 class FeedObject:
     def __init__(self, title, traffic, expanded_title, snippet, url, image_url):
         self.title = self.sanitize_data(title)
@@ -47,22 +46,23 @@ class FeedObject:
 class GoogleTrendingSearch:
     def __init__(self, country):
         self.url = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=' + country
-        self.display_date = str(date.today().strftime("%d %B %Y"))
         self.feed = feedparser.parse(self.url)
         self.feed_array = []
 
+    # check if the item from the rss feed was published today
     def published_today(self, published_date):
         today = date.today().strftime("%d %b")
         if today in published_date:
             return True
         return False
 
+    # get all the items from the feed that were posted today 
     def get_feed_data_today(self):
         for post in self.feed.entries:
             if self.published_today(post['published']):
                 self.feed_array.append(FeedObject(post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
                                                   post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
-
+    # get all the items from the feed 
     def get_feed_data_all(self):
         for post in self.feed.entries:
             self.feed_array.append(FeedObject(post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
