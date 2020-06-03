@@ -68,3 +68,18 @@ class GoogleTrendingSearch:
             self.feed_array.append(FeedObject(post['title'], post['ht_approx_traffic'], post['ht_news_item_title'],
                                               post['ht_news_item_snippet'], post['ht_news_item_url'], post['ht_picture']))
 
+    def get_all_keys(self):
+        for post in self.feed.entries:
+            print(post.keys())
+            break
+
+
+# def main():
+#     g = GoogleTrendingSearch('SG')
+#     tmp = g.get_feed_data_all()
+#     print(g.get_all_keys())
+#     for item in tmp:
+#         print(item)
+
+
+# main()
