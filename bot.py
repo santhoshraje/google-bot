@@ -8,6 +8,7 @@ from threading import Thread
 import schedule
 import time
 
+
 class Bot:
     def __init__(self, config):
         # loaded from config
@@ -100,7 +101,7 @@ class Bot:
                 f = open("test.p", "wb")
                 pickle.dump(posted_array, f)
                 f.close()
-                context.bot.send_photo(chat_id = update.effective_chat.id,
+                context.bot.send_photo(chat_id=update.effective_chat.id,
                                        photo=self.google_trending_search_image, caption=item.formatted(), parse_mode=telegram.ParseMode.HTML)
                 break
 
