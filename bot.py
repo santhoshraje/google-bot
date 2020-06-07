@@ -1,6 +1,7 @@
 # telegram modules
 from telegram.ext import Updater, CommandHandler
 import telegram.ext
+import logging
 # system modules
 import os
 from threading import Thread
@@ -10,6 +11,7 @@ import schedule
 # custom modules
 from config_loader import get_config_value as load
 from google_feed import GoogleFeed
+
 
 class Bot:
     def __init__(self, config):
@@ -26,8 +28,10 @@ class Bot:
         self.dp.add_handler(CommandHandler("start", self.start))
         self.dp.add_handler(CommandHandler(
             "trending", self.subscribe_to_google))
-        # self.dp.add_handler(CommandHandler(
-        #     "testfeed", self.google_trending_testing))
+        # bot logger 
+        logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+        self.logger = logging.getLogger('log')
         # variables used by bot
         self.id = 0
 
@@ -38,6 +42,7 @@ class Bot:
 
     def start(self, update, context):
         self.id = update.effective_chat.id
+        self.logger.info("User %s started the conversation.", update.message.from_user)
         context.bot.send_message(chat_id=self.id,
                                  text='<b>bold</b> <i>italic</i> <a href="http://google.com">link</a>.',
                                  parse_mode=telegram.ParseMode.HTML)
@@ -63,3 +68,7 @@ class Bot:
 
     def purge(self):
         os.remove('trending.pickle')
+
+    def error(self, update, context):
+        """Log Errors caused by Updates."""
+        self.logger.warning('Update "%s" caused error "%s"', update, context.error)
