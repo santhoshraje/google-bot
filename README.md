@@ -5,15 +5,14 @@
 </a>
 
 Telegram bot with cool features like:
+ - Google trending searches
+    - Periodically receive trending searches from Google. Supported countries include:
+      - Singapore
  - Multithreading support
  - Scheduling support
  - Data persistence
  - Hashing and hash comparison
  - Modular design
- - Google trending module
-    - Periodically receive trending searches from Google. Supported countries include:
-      - Singapore
-
  
  ## Getting Started
 
