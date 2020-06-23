@@ -28,6 +28,7 @@ class Bot:
 
         # bot logger 
         self.logger = logging.getLogger('log')
+        
 
         # variables used by bot
         self.id = 0
@@ -44,6 +45,8 @@ class Bot:
         self.dp.add_handler(CommandHandler("start", self.start))
         self.dp.add_handler(CommandHandler(
             "trending", self.subscribe_to_google))
+            
+        self.dp.add_error_handler(self.error)
 
         self.updater.start_polling()
         self.updater.idle()
