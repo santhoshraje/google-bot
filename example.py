@@ -7,5 +7,4 @@ def main():
     bot = Bot('config.json')
     bot.start_bot()
 
-if __name__ == '__main__':
-    main()
+main()
